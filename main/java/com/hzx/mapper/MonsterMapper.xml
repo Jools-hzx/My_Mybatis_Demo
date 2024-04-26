@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    mapper:表示创建一个映射器,
+    文档:https://mybatis.org/mybatis-3/zh/sqlmap-xml.html#insert_update_and_delete
+    1. namespace="com.hzx.mapper.MonsterMapper"
+       说明本mapper.xml文件是用来 映射管理 MonsterMapper接口,
+       主要是去实现 MonsterMapper 接口声明方法
+    2. a) select: 实现一个查询操作     b) insert:表示一个添加操作
+    3. id="addMonster" 表示 MonsterMapper 接口 的方法名
+    4. resultType="xx" 返回的结果类型，如果没有就不需要写
+    5. parameterType="com.hzx.entity.Monster" 表示该方法输入的参数类型
+    6. (age, birthday, email, gender, name, salary) 表的字段名
+    7. #{age},#{birthday},#{email},#{gender},#{name},#{salary} 是实体类 Monster 的属性名
+-->
+<mapper namespace="com.hzx.mapper.MonsterMapper">
+    <select id="getMonsterById" resultType="com.hzx.entity.Monster" parameterType="java.lang.String">
+        SELECT * FROM monster WHERE id=#{id};
+    </select>
+</mapper>

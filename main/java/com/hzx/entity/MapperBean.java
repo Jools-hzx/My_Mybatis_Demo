@@ -3,6 +3,7 @@ package com.hzx.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,5 +18,9 @@ import java.util.List;
 public class MapperBean {
 
     private String mapperName;
-    private List<Function> functions;
+    private List<Function> functions = new ArrayList<>();
+
+    public void addFunction(Function function) {
+        this.functions.add(function);
+    }
 }

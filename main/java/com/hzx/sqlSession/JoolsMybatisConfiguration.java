@@ -1,5 +1,7 @@
 package com.hzx.sqlSession;
 
+import com.hzx.entity.Function;
+import com.hzx.entity.MapperBean;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -11,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -91,4 +95,59 @@ public class JoolsMybatisConfiguration {
         }
     }
 
+    public MapperBean getMapperBean(String mapperXmlLoc) throws DocumentException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        if (mapperXmlLoc.isEmpty()) return null;
+        InputStream inputStream = classLoader.getResourceAsStream(mapperXmlLoc);
+        Document document = this.saxReader.read(inputStream);
+        Element rootElement = document.getRootElement();
+//        System.out.println("name:" + rootElement.getName());    //输出mapper
+
+        //得到映射的 Mapper 接口全类名
+        String mapperName = rootElement.attributeValue("namespace");
+        /*
+        <mapper namespace="com.hzx.mapper.MonsterMapper">
+            ....
+        </mapper>
+         */
+        //扫描遍历所有的 select / update/ delete / insert 配置信息
+        Iterator iterator = rootElement.elementIterator();
+
+        /*
+            <select id="getMonsterById" resultType="com.hzx.entity.Monster" parameterType="java.lang.String">
+                SELECT * FROM monster WHERE id=#{id};
+            </select>
+         */
+        String funcName = null;
+        Object resultType = null;
+        String parameterType = null;
+        String sql = null;
+        String sqlType = null;
+
+        MapperBean mapperBean = new MapperBean();
+        mapperBean.setMapperName(mapperName);
+
+        //遍历该 XML 文件内定义的子标签
+        while (iterator.hasNext()) {
+            Element element = (Element) iterator.next();
+            sqlType = element.getName();
+            funcName = element.attributeValue("id");
+            String resultTypeStr = element.attributeValue("resultType");
+            parameterType = element.attributeValue("parameterType");
+            sql = element.getText();
+
+            //封装成一个 Function 对象
+            Function function = new Function();
+            function.setSql(sql);
+            function.setSqlType(sqlType);
+            function.setFuncName(funcName);
+
+            Class<?> cls = Class.forName(resultTypeStr);
+            resultType = cls.newInstance();
+
+            function.setResultType(resultType);
+            function.setParameterType(parameterType);
+            mapperBean.addFunction(function);
+        }
+        return mapperBean;
+    }
 }

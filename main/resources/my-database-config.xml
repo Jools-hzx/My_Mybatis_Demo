@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<database>
+    <property name="driverClassName">com.mysql.cj.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://localhost:3306/jools_mybatis?useUnicode=true&amp;characterEncoding=utf8</property>
+    <property name="username">root</property>
+    <property name="password">hzx2001</property>
+</database>

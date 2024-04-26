@@ -15,8 +15,8 @@ public class JoolsExecutor implements Executor {
     private JoolsMybatisConfiguration configuration;
     private Connection connection;
 
-    public JoolsExecutor() {
-        this.configuration = new JoolsMybatisConfiguration();
+    public JoolsExecutor(JoolsMybatisConfiguration configuration) {
+        this.configuration = configuration;
         this.connection = this.configuration.loadConfig();
     }
 

@@ -14,6 +14,12 @@ import java.sql.SQLException;
  */
 public class testJoolsMybatis {
 
+    @Test
+    public void testSqlSessionQuery() {
+        JoolsSqlSession sqlSession = new JoolsSqlSession(new JoolsMybatisConfiguration());
+        Monster monster = (Monster) sqlSession.selectOne("SELECT * FROM `monster` WHERE id = ?", "1");
+        System.out.println(monster);
+    }
 
     @Test
     public void getConfigTest() {
@@ -24,7 +30,7 @@ public class testJoolsMybatis {
 
     @Test
     public void testExecutor() throws SQLException {
-        Executor executor = new JoolsExecutor();
+        Executor executor = new JoolsExecutor(new JoolsMybatisConfiguration());
         Monster monster = executor.query("SELECT * FROM `monster` WHERE id = ?", "1");
         System.out.println(monster);
     }

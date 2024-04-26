@@ -22,7 +22,7 @@ import java.util.List;
 public class JoolsMybatisConfiguration {
 
     private SAXReader saxReader;    //XML解析工具
-    private static final String configLocation = "my-database-config.xml";
+    private static final String CONFIG_LOCATION = "my-database-config.xml";
     private ClassLoader classLoader;    //类加载器
 
     public JoolsMybatisConfiguration() {
@@ -32,7 +32,7 @@ public class JoolsMybatisConfiguration {
 
     //读取xml配置文件，创建数据库 Connection
     public Connection loadConfig() {
-        InputStream inputStream = classLoader.getResourceAsStream(configLocation);
+        InputStream inputStream = classLoader.getResourceAsStream(CONFIG_LOCATION);
         Document document = null;
         try {
             document = saxReader.read(inputStream);

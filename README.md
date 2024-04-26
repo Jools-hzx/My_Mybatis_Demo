@@ -12,6 +12,10 @@ My_Mybatis_Demo 是一个模拟 MyBatis 的简单 ORM 框架，它实现了基�
 
 ## 快速开始
 
+### 环境要求
+- JDK 1.8 或更高版本
+- MySQL数据库
+
 1. **创建数据库和表**
 
     ```sql
@@ -103,6 +107,33 @@ MonsterMapper mapper = sqlSession.getMapper(MonsterMapper.class);
 Monster monster = mapper.getMonsterById("1");
 System.out.println(monster);
 ```
+## 项目结构
+src
+├── main
+│   ├── java
+│   │   └── com.hzx
+│   │       ├── entity
+│   │       │   ├── Function.java
+│   │       │   ├── MapperBean.java
+│   │       │   └── Monster.java
+│   │       ├── factory
+│   │       │   └── SqlSessionFactory.java
+│   │       ├── mapper
+│   │       │   ├── MapperProxy.java
+│   │       │   └── MonsterMapper.java
+│   │       └── sqlSession
+│   │           ├── Executor.java
+│   │           ├── JoolsExecutor.java
+│   │           ├── JoolsMybatisConfiguration.java
+│   │           └── JoolsSqlSession.java
+│   └── resources
+│       ├── MonsterMapper.xml
+│       └── my-database-config.xml
+└── test
+    └── java
+        └── com.hzx.sqlSession
+            └── testJoolsMybatis.java
+
 ## Contributer
 Jools He【email: 1035558517@qq.com】
 

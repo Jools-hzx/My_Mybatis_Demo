@@ -2,6 +2,7 @@ package com.hzx.sqlSession;
 
 import com.hzx.entity.MapperBean;
 import com.hzx.entity.Monster;
+import com.hzx.factory.SqlSessionFactory;
 import com.hzx.mapper.MonsterMapper;
 import org.junit.Test;
 
@@ -15,6 +16,16 @@ import java.sql.SQLException;
  * @description: TODO
  */
 public class testJoolsMybatis {
+
+    @Test
+    public void getSqlSessionFromFactory() {
+        SqlSessionFactory factory = SqlSessionFactory.build(new JoolsMybatisConfiguration());
+        JoolsSqlSession sqlSession = factory.openSession();
+        MonsterMapper mapper = sqlSession.getMapper(MonsterMapper.class);
+        Monster monster = mapper.getMonsterById("1");
+        System.out.println(monster);
+        System.out.println("查询成功!");
+    }
 
     @Test
     public void proxyTest() {

@@ -2,7 +2,7 @@ package com.hzx.sqlSession;
 
 import com.hzx.entity.MapperBean;
 import com.hzx.entity.Monster;
-import org.dom4j.DocumentException;
+import com.hzx.mapper.MonsterMapper;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -15,6 +15,14 @@ import java.sql.SQLException;
  * @description: TODO
  */
 public class testJoolsMybatis {
+
+    @Test
+    public void proxyTest() {
+        JoolsSqlSession sqlSession = new JoolsSqlSession(new JoolsMybatisConfiguration());
+        MonsterMapper mapper = sqlSession.getMapper(MonsterMapper.class);
+        Monster monster = mapper.getMonsterById("1");
+        System.out.println(monster);
+    }
 
     @Test
     public void testGetMapperBean() {

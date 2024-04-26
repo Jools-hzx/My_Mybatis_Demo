@@ -1,5 +1,11 @@
 package com.hzx.sqlSession;
 
+import com.hzx.mapper.MapperProxy;
+import sun.reflect.Reflection;
+
+import java.lang.reflect.*;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.sql.SQLException;
 
 /**
@@ -27,5 +33,24 @@ public class JoolsSqlSession {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //获取实现传入接口的动态代理类
+    @SuppressWarnings("all")
+    public <T> T getMapper(Class<T> clazz) {
+        /*
+            Proxy 构造器:
+        public static Object newProxyInstance(ClassLoader loader,
+                                            Class<?>[] interfaces,
+                                            InvocationHandler h){}
+         */
+        return (T) Proxy.newProxyInstance(
+                this.configuration.getClass().getClassLoader(),
+                new Class[]{clazz}, //实现的所有接口Class类
+                new MapperProxy(       //自定义的 InvocationHandler 类
+                        this,          //自定义 SqlSession 对象
+                        this.configuration, //自定义 Configuration 类
+                        clazz)          //传入的接口类
+        );
     }
 }

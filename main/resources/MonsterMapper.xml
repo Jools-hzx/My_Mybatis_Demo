@@ -14,6 +14,6 @@
 -->
 <mapper namespace="com.hzx.mapper.MonsterMapper">
     <select id="getMonsterById" resultType="com.hzx.entity.Monster" parameterType="java.lang.String">
-        SELECT * FROM monster WHERE id=#{id};
+        SELECT * FROM monster WHERE id=?;
     </select>
 </mapper>
